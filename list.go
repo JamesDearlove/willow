@@ -56,12 +56,12 @@ func (l listItem) draw() {
 		Height: l.height,
 	}
 
-	borderColour := rl.Black
+	borderColour := rl.White
 	if l.selected {
-		borderColour = rl.Red
+		borderColour = rl.Black
 	}
 
-	rl.DrawRectangleRec(itemRect, rl.LightGray)
+	rl.DrawRectangleRec(itemRect, rl.White)
 	rl.DrawRectangleLinesEx(itemRect, 2, borderColour)
-	rl.DrawText(l.text, 10, int32(l.yPos)+10, 20, rl.RayWhite)
+	rl.DrawText(l.text, 10, int32(l.yPos)+10, 20, rl.Black)
 }

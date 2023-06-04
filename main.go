@@ -17,6 +17,10 @@ func drawGrid() {
 	rl.PopMatrix()
 }
 
+func easeOutQuart(x float64) float64 {
+	return 1 - math.Pow(1 - x, 4)
+}
+
 func minInt(a int, b int) int {
 	return int(math.Min(float64(a), float64(b)))
 }
@@ -37,7 +41,9 @@ func main() {
 	camera.Zoom = 1.0
 	const grid = false
 
-	const moveDelay = 5
+	cameraMove := float32(0)
+
+	const moveDelay = 8
 	lastMoveCounter := moveDelay
 
 	listText := []string{"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10"}
@@ -45,7 +51,7 @@ func main() {
 	listC := list{
 		xPos: 0,
 		yPos: 0,
-		width: 150,
+		width: float32(screenWidth),
 		itemHeight: listItemHeight,
 		selectedIndex: 0,
 	}
@@ -71,12 +77,19 @@ func main() {
 		currentLoc := float32(listC.selectedIndex * listItemHeight)
 
 		if currentLoc >= camera.Target.Y+viewportYHeight {
-			camera.Target.Y = currentLoc - viewportYHeight + listItemHeight
+			cameraMove = 1
 		} else if currentLoc < camera.Target.Y {
-			camera.Target.Y = currentLoc
+			cameraMove = -1
 		}
 
-		
+		// TODO: This animation is sketch
+		if lastMoveCounter < 8 {
+			x := float64(lastMoveCounter) / 4
+			camera.Target.Y += float32(easeOutQuart(x)) * cameraMove * 6.45
+		} else if lastMoveCounter == 8 {
+			camera.Target.Y = float32(math.Round(float64(camera.Target.Y)))
+			cameraMove = 0
+		}
 
 		// DRAW
 		rl.BeginDrawing()
