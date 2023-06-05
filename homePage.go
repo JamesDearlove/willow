@@ -4,29 +4,23 @@ import (
 	"math"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
+	"github.com/jamesdearlove/willow/components"
 )
 
-type element interface {
-	create()
-	tick()
-	draw()
-}
-
 type homePage struct {
-	camera  rl.Camera2D
+	camera rl.Camera2D
 
 	cameraMove      float32
 	moveDelay       int
 	lastMoveCounter int
 
-	listC    list
+	listC    components.List
 	listText []string
 }
 
-func (h *homePage) create() {
+func (h *homePage) Create() {
 	h.camera = rl.Camera2D{}
 	h.camera.Zoom = 1.0
-	// const grid = false
 
 	h.cameraMove = float32(0)
 
@@ -35,24 +29,25 @@ func (h *homePage) create() {
 
 	h.listText = []string{"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10"}
 
-	h.listC = list{
-		xPos:          0,
-		yPos:          0,
-		width:         float32(screenWidth),
-		itemHeight:    listItemHeight,
-		selectedIndex: 0,
+	h.listC = components.List{
+		X:             0,
+		Y:             0,
+		Width:         float32(screenWidth),
+		ItemHeight:    listItemHeight,
+		SelectedIndex: 0,
+		TextStrings:   h.listText,
 	}
-
-	h.listC.createItems(h.listText)
+	
+	h.listC.Create()
 }
 
-func (h *homePage) tick() {
+func (h *homePage) Update() {
 	if h.lastMoveCounter == h.moveDelay {
 		if rl.IsKeyDown(rl.KeyDown) {
-			h.listC.selectedIndex = minInt(h.listC.selectedIndex+1, len(h.listText)-1)
+			h.listC.SelectedIndex = minInt(h.listC.SelectedIndex+1, len(h.listText)-1)
 			h.lastMoveCounter = 0
 		} else if rl.IsKeyDown(rl.KeyUp) {
-			h.listC.selectedIndex = maxInt(h.listC.selectedIndex-1, 0)
+			h.listC.SelectedIndex = maxInt(h.listC.SelectedIndex-1, 0)
 			h.lastMoveCounter = 0
 		}
 	} else {
@@ -61,7 +56,7 @@ func (h *homePage) tick() {
 
 	// Check camera can check bounds of list
 	viewportYHeight := float32(screenHeight - int32(statusBarHeight))
-	currentLoc := float32(h.listC.selectedIndex * listItemHeight)
+	currentLoc := float32(h.listC.SelectedIndex * listItemHeight)
 
 	if currentLoc >= h.camera.Target.Y+viewportYHeight {
 		h.cameraMove = 1
@@ -79,7 +74,7 @@ func (h *homePage) tick() {
 	}
 }
 
-func (h *homePage) draw() {
+func (h *homePage) Draw() {
 	rl.BeginMode2D(h.camera)
 
 	// Draw the 3d grid, rotated 90 degrees and centered around 0,0 for the XY Plane
@@ -87,8 +82,8 @@ func (h *homePage) draw() {
 	// 	drawGrid()
 	// }
 
-	// drawList(listItems, selectedIndex)
-	h.listC.draw()
+	// drawList(listItems, SelectedIndex)
+	h.listC.Draw()
 
 	rl.EndMode2D()
 
@@ -99,8 +94,8 @@ func (h *homePage) draw() {
 		Height: statusBarHeight,
 	}
 
-	rl.DrawRectanglePro(topBar, rl.Vector2{X: 0, Y: 0}, 0, rl.RayWhite)
+	rl.DrawRectanglePro(topBar, rl.Vector2{X: 0, Y: 0}, 0, rl.Black)
 
 	// rl.DrawRectangleLinesEx(topBar, 2, rl.DarkGray)
-	rl.DrawText("A List", 10, int32(topBar.Y)+10, 20, rl.Black)
+	rl.DrawText("A List", 10, int32(topBar.Y)+10, 20, rl.White)
 }

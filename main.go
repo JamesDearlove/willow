@@ -3,7 +3,8 @@ package main
 import (
 	"math"
 
-	"github.com/gen2brain/raylib-go/raylib"
+	rl "github.com/gen2brain/raylib-go/raylib"
+	"github.com/jamesdearlove/willow/components"
 )
 
 const statusBarHeight float32 = 40
@@ -21,7 +22,7 @@ func drawGrid() {
 }
 
 func easeOutQuart(x float64) float64 {
-	return 1 - math.Pow(1 - x, 4)
+	return 1 - math.Pow(1-x, 4)
 }
 
 func minInt(a int, b int) int {
@@ -40,18 +41,18 @@ func main() {
 
 	hp := homePage{}
 
-	var selected element = &hp
+	var selected components.Component = &hp
 
-	selected.create()
+	selected.Create()
 
 	for !rl.WindowShouldClose() {
-		selected.tick()
+		selected.Update()
 
 		// DRAW
 		rl.BeginDrawing()
 		rl.ClearBackground(rl.White)
 
-		selected.draw()
+		selected.Draw()
 
 		rl.EndDrawing()
 	}
