@@ -12,7 +12,7 @@ type homePage struct {
 
 func (h *homePage) Create() {
 
-	h.listText = []string{"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10"}
+	h.listText = []string{"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10", "Item 11", "Item 12", "Item 13", "Item 14", "Item 15"}
 
 	h.listC = components.List{
 		X:             0,
@@ -43,5 +43,5 @@ func (h *homePage) Draw() {
 	}
 
 	rl.DrawRectanglePro(topBar, rl.Vector2{X: 0, Y: 0}, 0, rl.Black)
-	rl.DrawText("A List", 10, int32(topBar.Y)+10, 20, rl.White)
+	rl.DrawText("A List", 10, int32(topBar.Y)+5, 20, rl.White)
 }

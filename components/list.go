@@ -1,6 +1,8 @@
 package components
 
 import (
+	"math"
+
 	"github.com/gen2brain/raylib-go/raylib"
 	"github.com/jamesdearlove/willow/utils"
 	// "math"
@@ -79,9 +81,17 @@ func (l *List) Update() {
 	}
 
 	// TODO: Animations were removed because jank, to be readded with its own system.
-	// Update the camera location
 
-	l.camera.Target.Y = l.ItemHeight * float32(l.SelectedIndex)
+	// Update the camera location
+	// TODO: Remove the magic numbers
+	
+	screenHeight := 210
+	fitOnScreen := float32(screenHeight) / l.ItemHeight
+	totalLength := l.ItemHeight * float32(len(l.Items))
+
+	calc := float64(l.ItemHeight * float32(l.SelectedIndex) - (fitOnScreen / 2) * l.ItemHeight)
+
+	l.camera.Target.Y = float32(math.Min(math.Max(0, calc), float64(totalLength - float32(screenHeight))))
 }
 
 func (l *ListItem) Update() {}

@@ -5,7 +5,7 @@ import (
 	"github.com/jamesdearlove/willow/components"
 )
 
-const statusBarHeight float32 = 40
+const statusBarHeight float32 = 30
 const listItemHeight = 40
 
 const screenWidth = 400
