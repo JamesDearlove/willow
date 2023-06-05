@@ -1,2 +1,4 @@
 github.com/gen2brain/raylib-go/raylib v0.0.0-20230511170620-d84e4cc82f8d h1:M1gq2devl4lx6K0Gky7CvbYrxMMP2uC903C9bO+GO28=
 github.com/gen2brain/raylib-go/raylib v0.0.0-20230511170620-d84e4cc82f8d/go.mod h1:AwtGA3aTtYdezNxEVbfchaLw/z+CuRDh2Mlxy0FbBro=
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
