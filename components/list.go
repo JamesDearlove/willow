@@ -5,10 +5,10 @@ import (
 
 	"github.com/gen2brain/raylib-go/raylib"
 	"github.com/jamesdearlove/willow/utils"
-	// "math"
 )
 
 const moveDelay = 8
+const animatePixels = 5
 
 type List struct {
 	X, Y float32
@@ -68,7 +68,7 @@ func (l *ListItem) Create() {}
 func (l *List) Update() {
 
 	// Check if moving up or down and delay has past
-	if l.lastMoveCounter > moveDelay {
+	if l.Active && l.lastMoveCounter > moveDelay {
 		if rl.IsKeyDown(rl.KeyDown) {
 			l.SelectedIndex = utils.MinInt(l.SelectedIndex+1, len(l.Items)-1)
 			l.lastMoveCounter = 0
@@ -84,14 +84,18 @@ func (l *List) Update() {
 
 	// Update the camera location
 	// TODO: Remove the magic numbers
-	
 	screenHeight := 210
-	fitOnScreen := float32(screenHeight) / l.ItemHeight
-	totalLength := l.ItemHeight * float32(len(l.Items))
 
-	calc := float64(l.ItemHeight * float32(l.SelectedIndex) - (fitOnScreen / 2) * l.ItemHeight)
+	middleOriginOffset := l.ItemHeight * (float32(screenHeight) / l.ItemHeight - 1) / 2
+	totalListLength := l.ItemHeight * float32(len(l.Items))
 
-	l.camera.Target.Y = float32(math.Min(math.Max(0, calc), float64(totalLength - float32(screenHeight))))
+	// Calculate the camera target location so the selected item is in the center
+	centerLoc := float64(l.ItemHeight * float32(l.SelectedIndex) - middleOriginOffset)
+
+	// Ensure the camera doesn't show the space before or after the list.
+	targetBounding := float32(math.Min(math.Max(0, centerLoc), float64(totalListLength - float32(screenHeight))))
+	l.camera.Target.Y = targetBounding
+
 }
 
 func (l *ListItem) Update() {}
