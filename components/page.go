@@ -6,23 +6,23 @@ import (
 
 type Page struct {
 	// heading string
-	items   []Component
+	Items   []Component
 }
 
 func (p *Page) Create() {
-	for i := 0; i < len(p.items); i++ {
-		p.items[i].Create()
+	for i := 0; i < len(p.Items); i++ {
+		p.Items[i].Create()
 	}
 }
 
 func (p *Page) Draw() {
-	for i := 0; i < len(p.items); i++ {
-		p.items[i].Draw()
+	for i := 0; i < len(p.Items); i++ {
+		p.Items[i].Draw()
 	}
 }
 
 func (p *Page) Update() {
-	for i := 0; i < len(p.items); i++ {
-		p.items[i].Update()
+	for i := 0; i < len(p.Items); i++ {
+		p.Items[i].Update()
 	}
 }

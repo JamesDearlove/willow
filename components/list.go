@@ -63,7 +63,6 @@ func (l *List) BuildListItems() {
 }
 
 func (l *List) Update() {
-
 	// Check if moving up or down and delay has past
 	if l.Active && l.lastMoveCounter > moveDelay {
 		if rl.IsKeyDown(rl.KeyDown) {
@@ -86,6 +85,7 @@ func (l *List) Update() {
 	// Ensure the camera doesn't show the space before or after the list.
 	targetBounding := float32(math.Min(math.Max(0, centerLoc), float64(totalListLength-float32(l.Height))))
 
+	// And because we're fancy, animate it
 	diff := l.camera.Target.Y - targetBounding
 	l.camera.Target.Y = l.camera.Target.Y - diff/3
 }
