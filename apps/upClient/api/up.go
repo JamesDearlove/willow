@@ -12,6 +12,8 @@ const UrlBase = "https://api.up.com.au/api/v1/"
 const TransactionsEndpoint = "transactions"
 const PingEndpoint = "util/ping"
 
+const AccountsEndpoint = "accounts"
+
 type MoneyObject struct {
 	CurrencyCode string `json:"currencyCode"`
 	Value        string `json:"value"`
@@ -38,11 +40,13 @@ type Transaction struct {
 	} `json:"links"`
 }
 
-func MakeTransactionListRequest(token string) (Transaction, error) {
+func MakeTransactionListRequest(token string, accountId string) (Transaction, error) {
 
 	client := &http.Client{}
 
-	req, err := http.NewRequest("GET", UrlBase+TransactionsEndpoint, nil)
+	url := UrlBase + AccountsEndpoint + "/" + accountId + "/" + TransactionsEndpoint
+
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
 		return Transaction{}, err
