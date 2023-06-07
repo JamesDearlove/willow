@@ -8,7 +8,6 @@ import (
 )
 
 const moveDelay = 8
-const animatePixels = 5
 
 type List struct {
 	X, Y float32
@@ -63,8 +62,6 @@ func (l *List) BuildListItems() {
 	}
 }
 
-func (l *ListItem) Create() {}
-
 func (l *List) Update() {
 
 	// Check if moving up or down and delay has past
@@ -80,28 +77,22 @@ func (l *List) Update() {
 		l.lastMoveCounter += 1
 	}
 
-	// TODO: Animations were removed because jank, to be readded with its own system.
-
-	// Update the camera location
-	// TODO: Remove the magic numbers
-	screenHeight := 210
-
-	middleOriginOffset := l.ItemHeight * (float32(screenHeight) / l.ItemHeight - 1) / 2
+	// Calculate the camera target location so the selected item is in the center
+	middleOriginOffset := l.ItemHeight * (float32(l.Height)/l.ItemHeight - 1) / 2
 	totalListLength := l.ItemHeight * float32(len(l.Items))
 
-	// Calculate the camera target location so the selected item is in the center
-	centerLoc := float64(l.ItemHeight * float32(l.SelectedIndex) - middleOriginOffset)
+	centerLoc := float64(l.ItemHeight*float32(l.SelectedIndex) - middleOriginOffset)
 
 	// Ensure the camera doesn't show the space before or after the list.
-	targetBounding := float32(math.Min(math.Max(0, centerLoc), float64(totalListLength - float32(screenHeight))))
-	l.camera.Target.Y = targetBounding
+	targetBounding := float32(math.Min(math.Max(0, centerLoc), float64(totalListLength-float32(l.Height))))
 
+	diff := l.camera.Target.Y - targetBounding
+	l.camera.Target.Y = l.camera.Target.Y - diff/3
 }
-
-func (l *ListItem) Update() {}
 
 func (l *List) Draw() {
 	rl.BeginMode2D(l.camera)
+	rl.BeginScissorMode(int32(l.X), int32(l.Y), int32(l.Width), int32(l.Height))
 
 	for i := 0; i < len(l.Items); i++ {
 		l.Items[i].Selected = i == l.SelectedIndex
@@ -109,8 +100,13 @@ func (l *List) Draw() {
 		l.Items[i].Draw()
 	}
 
+	rl.EndScissorMode()
 	rl.EndMode2D()
 }
+
+func (l *ListItem) Create() {}
+
+func (l *ListItem) Update() {}
 
 func (l *ListItem) Draw() {
 	itemRect := rl.Rectangle{

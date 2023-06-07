@@ -11,7 +11,6 @@ const listItemHeight = 40
 const screenWidth = 400
 const screenHeight = 240
 
-
 func main() {
 
 	rl.InitWindow(screenWidth, screenHeight, "Willow Emulator")

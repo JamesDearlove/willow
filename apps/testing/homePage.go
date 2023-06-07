@@ -18,6 +18,7 @@ func (h *homePage) Create() {
 		X:             0,
 		Y:             0,
 		Width:         float32(screenWidth),
+		Height:        float32(screenHeight - statusBarHeight),
 		ItemHeight:    listItemHeight,
 		SelectedIndex: 0,
 		TextStrings:   h.listText,
