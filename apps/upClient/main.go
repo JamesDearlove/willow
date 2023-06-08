@@ -23,6 +23,8 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	// TODO: This should be done after we've created the view and 
+	//       told the user we're loading
 	upToken := os.Getenv("UP_TOKEN")
 	accountId := os.Getenv("UP_ACCOUNT_ID")
 	items, err := api.MakeTransactionListRequest(upToken, accountId)

@@ -14,9 +14,10 @@ func main() {
 	rl.SetTargetFPS(60)
 	defer rl.CloseWindow()
 
-	homePage := makeHomePage()
+	// homePage := makeHomePage()
+	pageAnimated := makeAnimatePAge()
 
-	var selected components.Component = &homePage
+	var selected components.Component = &pageAnimated
 
 	selected.Create()
 
