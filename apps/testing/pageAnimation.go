@@ -1,11 +1,16 @@
-package main
+package testing
 
 import (
 	"github.com/gen2brain/raylib-go/raylib"
 	"github.com/jamesdearlove/willow/components"
 )
 
-func makeAnimatePAge() components.Page {
+const screenWidth = 400
+const screenHeight = 240
+
+const fontSize = 16
+
+func MakeAnimatePage() components.Page {
 	h := components.Page{}
 
 	page := WritablePage{
@@ -55,22 +60,15 @@ func (p *WritablePage) Create() {
 }
 
 func (p *WritablePage) Update() {
-	// TODO: Need to convert all input keys to text
-	if rl.IsKeyPressed(rl.KeyQ) {
-		p.text += "Q"
-	} else if rl.IsKeyPressed(rl.KeyW) {
-		p.text += "W"
-	} else if rl.IsKeyPressed(rl.KeyE) {
-		p.text += "E"
-	} else if rl.IsKeyPressed(rl.KeyR) {
-		p.text += "R"
-	} else if rl.IsKeyPressed(rl.KeyT) {
-		p.text += "T"
-	} else if rl.IsKeyPressed(rl.KeyY) {
-		p.text += "Y"
-	} else if rl.IsKeyPressed(rl.KeyEnter) {
+
+	if char := rl.GetCharPressed(); char != 0 {
+		p.text += string(char)
+	}
+
+	// TODO: Key repeats...
+	if key := rl.GetKeyPressed(); key == rl.KeyEnter {
 		p.text += "\n"
-	} else if rl.IsKeyPressed(rl.KeyBackspace) {
+	} else if key == rl.KeyBackspace {
 		if len(p.text) > 0 {
 			p.text = p.text[0 : len(p.text)-1]
 		}

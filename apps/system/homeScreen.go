@@ -1,4 +1,4 @@
-package testing
+package system
 
 import (
 	// "github.com/gen2brain/raylib-go/raylib"
@@ -8,11 +8,14 @@ import (
 const statusBarHeight float32 = 30
 const listItemHeight = 40
 
+const screenWidth = 400
+const screenHeight = 240
 
-func MakeHomePage() components.Page {
+
+func MakeHomeScreen() components.Page {
 	h := components.Page{}
 
-	listText := []string{"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9", "Item 10", "Item 11", "Item 12", "Item 13", "Item 14", "Item 15"}
+	listText := []string{"Beeper", "Weather", "Settings"}
 
 	list := components.List{
 		X:             0,

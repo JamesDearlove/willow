@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/jamesdearlove/willow/apps/system"
+
 	"github.com/gen2brain/raylib-go/raylib"
 	"github.com/jamesdearlove/willow/components"
 )
@@ -15,7 +17,7 @@ func main() {
 	defer rl.CloseWindow()
 
 	// homePage := makeHomePage()
-	pageAnimated := makeAnimatePAge()
+	pageAnimated := system.MakeHomeScreen()
 
 	var selected components.Component = &pageAnimated
 
